@@ -1,0 +1,171 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  # DynamoDB Table
+  LanguageGameTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: language-game
+      AttributeDefinitions:
+        - AttributeName: category
+          AttributeType: S
+        - AttributeName: english
+          AttributeType: S
+      KeySchema:
+        - AttributeName: category
+          KeyType: HASH
+        - AttributeName: english
+          KeyType: RANGE
+      BillingMode: PAY_PER_REQUEST
+
+  # Lambda Function
+  LanguageGameLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: language-game
+      CodeUri: lambda/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Environment:
+        Variables:
+          AWS_DYNAMODB_TABLE_NAME: !Ref LanguageGameTable
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref LanguageGameTable
+      Events:
+        LanguageGameApi:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref LanguageGameApi
+            Path: /language-game
+            Method: GET
+
+  # HTTP API Gateway
+  LanguageGameApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      Name: language-game-api
+      Auth:
+      CorsConfiguration:
+        AllowOrigins:
+          - "*"
+        AllowHeaders:
+          - "Content-Type"
+        AllowMethods:
+          - "OPTIONS"
+          - "GET"
+          - "HEAD"
+
+  # S3 Bucket
+  LanguageGameBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: language-game-bucket-3lx94n
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+#create cloudfront origin access identity for s3 bucket
+  LanguageGameOriginAccessIdentity:
+    Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+    Properties:
+      CloudFrontOriginAccessIdentityConfig:
+        Comment: "Language Game S3 Bucket Origin Access Identity"
+
+#create bucket policy to allow cloudfront to access s3 bucket
+  LanguageGameBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref LanguageGameBucket
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              CanonicalUser: !GetAtt LanguageGameOriginAccessIdentity.S3CanonicalUserId
+            Action: "s3:GetObject"
+            Resource: !Sub "${LanguageGameBucket.Arn}/*"
+
+#provision cloudfront distribution with s3 and http api origins
+  LanguageGameCloudFrontDistribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        DefaultRootObject: index.html
+        Origins:
+          - Id: LanguageGameBucket
+            DomainName: !GetAtt LanguageGameBucket.RegionalDomainName
+            S3OriginConfig:
+              OriginAccessIdentity: !Sub "origin-access-identity/cloudfront/${LanguageGameOriginAccessIdentity}"
+          - Id: LanguageGameApi
+            DomainName: !Sub "${LanguageGameApi}.execute-api.${AWS::Region}.amazonaws.com"
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginProtocolPolicy: https-only
+        Enabled: true
+        HttpVersion: http2
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+        DefaultCacheBehavior:
+          TargetOriginId: LanguageGameBucket
+          ViewerProtocolPolicy: redirect-to-https
+          AllowedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          CachedMethods:
+            - GET
+            - HEAD
+            - OPTIONS
+          ForwardedValues:
+            QueryString: true
+            Cookies:
+              Forward: none
+          DefaultTTL: 86400
+          MaxTTL: 31536000
+          MinTTL: 0
+        CacheBehaviors:
+          - PathPattern: /language-game
+            TargetOriginId: LanguageGameApi
+            ViewerProtocolPolicy: redirect-to-https
+            AllowedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            CachedMethods:
+              - GET
+              - HEAD
+              - OPTIONS
+            ForwardedValues:
+              QueryString: true
+              Cookies:
+                Forward: none
+            DefaultTTL: 0
+            MaxTTL: 0
+            MinTTL: 0
+
+
+
+
+Outputs:
+  DynamoDBTableName:
+    Description: Name of the DynamoDB table
+    Value: !Ref LanguageGameTable
+  LambdaFunctionName:
+    Description: Name of the Lambda function
+    Value: !Ref LanguageGameLambda
+  HttpApiUrl:
+    Description: URL of the HTTP API Gateway
+    Value: !Sub "https://${LanguageGameApi}.execute-api.${AWS::Region}.amazonaws.com"
+  S3BucketName:
+    Description: Name of the S3 bucket
+    Value: !Ref LanguageGameBucket
+  CloudFrontDistributionUrl:
+    Description: URL of the CloudFront distribution
+    Value: !Sub "https://${LanguageGameCloudFrontDistribution.DomainName}"

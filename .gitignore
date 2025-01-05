@@ -1,0 +1,36 @@
+# DynamoDB Backup
+dynamodb-backup
+
+# Events
+events/
+
+# SAM Build Artifacts
+.aws-sam/
+
+# Python Dependencies
+*.pyc
+__pycache__/
+
+# Node.js Dependencies
+node_modules/
+
+# Frontend Build Files
+frontend/build/
+frontend/dist/
+
+# OS/Editor Specific Files
+.DS_Store
+.vscode/
+.idea/
+
+# Environment Variables
+.env
+env.json
+
+#scripts
+scripts/add_language.py
+scripts/utility_functions.py
+scripts/config.py
+scripts/generate-audio-polly.py
+samconfig.toml
+scripts/update_audio_urls.py

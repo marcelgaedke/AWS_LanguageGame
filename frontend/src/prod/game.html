@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Children Language Game</title>
+    <link rel="stylesheet" href="game.css">
+
+
+</head>
+<body>
+    <div id="startScreen">
+        <!-- Placeholder for the selected flag -->
+        <div class="selected-flag">
+            <img id="flagImage" src="" alt="Selected language flag" class="flag-image">
+        </div>
+    
+        <!-- Start game button -->
+        <div class="start-button-container">
+            <button id="startButton">Start Game</button>
+        </div>
+    </div>
+
+    <div id="gameArea" style="display: none;">
+        <div class="top-top-row-container">
+            <div id="home-button-container">
+                <img id="home-button-img" src="images/home.png"/>
+            </div>    
+            <div id="timer">⏰ <span id="time-remaining">30</span>s</div>        
+            <div class="selected-flag">
+                <img id="gameFlagImage" src="" alt="Selected language flag" class="flag-image">
+            </div>
+            
+        </div>
+        <div class="top-row-container">
+            <div class="audioButtonContainer">
+                <div id="repeatAudioButton" aria-label="Repeat Word">
+                🔊 <!-- Emoji or use an SVG/image -->
+                </div>
+            </div>
+            <div class="title" id="word"></div> <!-- Display the word -->
+            <div id="score" class="score">Score: 0</div> <!-- Score display -->
+        </div>
+        <div id="images" class="image-container"></div> <!-- Image tiles container -->
+        <div id="resultMessage" class="result-message"></div> <!-- Result message -->
+
+        <!-- New Game Button -->
+        <div class="newGameButtonDiv">
+            <button id="newGameButton" class="new-game-button" style="display: none;">New Game</button>
+        </div>
+        <!-- Audio elements -->
+        <audio id="audioPlayer"></audio>
+        <audio id="audioCorrect" src="audio/correct.mp3" preload="auto" style="display:none;"></audio>
+        <audio id="audioIncorrect" src="audio/wrong.mp3" preload="auto" style="display:none;"></audio>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

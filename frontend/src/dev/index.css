@@ -1,0 +1,77 @@
+/* General styling for the page */
+body {
+    font-family: 'Comic Sans MS', 'Comic Sans', 'Verdana', 'sans-serif', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f8ff; /* Light blue background */
+}
+
+.headline {
+    border: 2px solid red;
+    margin: 0 auto; /* Ensures the center div stays centered */
+    text-align: center;
+}
+
+/* Container styling */
+.container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff; /* White background for contrast */
+    max-width: 500px;
+    width: 90%;
+}
+
+/* Title styling */
+.title {
+    font-size: 2.5rem;
+    color: #ff4500; /* Bright orange for fun and engagement */
+    margin-bottom: 20px;
+}
+
+/* Flag grid styling */
+.flag-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns */
+    gap: 15px; /* Space between buttons */
+}
+
+/* Flag button styling */
+.flag-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s ease;
+}
+
+.flag-button:hover {
+    transform: scale(1.1); /* Enlarge slightly on hover */
+}
+
+/* Flag image styling */
+.flag-image {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    .flag-image {
+        width: 80px; /* Smaller images for small screens */
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+}
+
+
+
+
