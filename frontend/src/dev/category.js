@@ -1,18 +1,18 @@
 // Map of languages to flag image paths
 const flagImages = {
-    english: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/english.png',
-    italian: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/italy.png',
-    german: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/germany.png',
-    spanish: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/spain.png',
-    french: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/france.png'
+    english: 'images/flags/english.png',
+    italian: 'images/flags/italy.png',
+    german: 'images/flags/germany.png',
+    spanish: 'images/flags/spain.png',
+    french: 'images/flags/france.png'
 };
 
 // Map of categories to image paths
 const categoryImages = {
-    fruits: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/categories/fruits.png',
-    vegetables: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/categories/vegetables.jpg',
-    animals: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/categories/animals.png',
-    colors: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/categories/colors.png',
+    fruits: 'images/categories/fruits.png',
+    vegetables: 'images/categories/vegetables.jpg',
+    animals: 'images/categories/animals.png',
+    colors: 'images/categories/colors.png',
 };
 
 // Parse language from query parameters

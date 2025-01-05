@@ -7,17 +7,17 @@ let score = 0;
 const urlParams = new URLSearchParams(window.location.search);
 const selectedLanguage = urlParams.get('language');
 const category = urlParams.get('category');
-const apiUrl = `https://6dj2pyqi23.execute-api.eu-central-1.amazonaws.com/Prod/language_learning_game?language=${selectedLanguage}&category=${category}`;
+const apiUrl = `language-game?language=${selectedLanguage}&category=${category}`;
 
 
 
 // Map of languages to flag image paths
 const flagImages = {
-    italian: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/italy.png',
-    german: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/germany.png',
-    spanish: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/spain.png',
-    french: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/france.png',
-    english: 'https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/flags/english.png'
+    italian: 'images/flags/italy.png',
+    german: 'images/flags/germany.png',
+    spanish: 'images/flags/spain.png',
+    french: 'images/flags/france.png',
+    english: 'images/flags/english.png'
 };
 
 // Update the flag image based on the selected language
@@ -89,7 +89,6 @@ function startGame() {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            const s3BucketPrefix = data.s3_bucket_prefix;
             const category = data.category;
             const correctImage = data.correctImage;
             const incorrectImages = data.incorrectImages;
@@ -101,11 +100,11 @@ function startGame() {
 
             // Play audio
             const audioPlayer = document.getElementById('audioPlayer');
-            audioPlayer.src = audioUrl;
+            audioPlayer.src = `audio/${category}/${audioUrl}`;
             audioPlayer.play().catch(error => console.error('Audio play failed:', error));
 
             // Prepare image tiles
-            const imageURLPrefix = `${s3BucketPrefix}images/${category}/`;
+            const imageURLPrefix = `images/${category}/`;
             const imageContainer = document.getElementById('images');
             const imageUrls = [
                 `${imageURLPrefix}${correctImage}`,
