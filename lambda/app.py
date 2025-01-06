@@ -10,10 +10,8 @@ dynamo_client = boto3.client('dynamodb', region_name='eu-central-1')
 def lambda_handler(event, context):
     
     #Parse Variables from event
-
-    #print("Received event: " + json.dumps(event, indent=2))
+    #print("Received event: " + json.dumps(event, indent=2))   #for debugging
     table_name = os.environ.get('AWS_DYNAMODB_TABLE_NAME')
-    #s3_bucket_prefix = os.environ.get('AWS_S3_BUCKET_PREFIX')      #https://language-learning-game-assets.s3.eu-central-1.amazonaws.com/images/fruits/apple.png
     print("Table Name: " + table_name)
     print("Method: " + event['requestContext']['http']['method'])
     #print event query string parameters
@@ -24,11 +22,6 @@ def lambda_handler(event, context):
     ressource_path = event['requestContext']['http']['path']
     print("Resource Path: " + ressource_path)
     
-    #exit clean
-    #return response(None, "Exiting")
-
-   
-
 
     if event['requestContext']['http']['method'] == 'GET':
         print("Method GET")
@@ -52,7 +45,6 @@ def lambda_handler(event, context):
             #return json response
             language_audio_url = f"{language}_audio_url"
             body ={
-#                    "s3_bucket_prefix": s3_bucket_prefix,
                     "category": category,
                     "word": correct_item[language]['S'],
                     "audioUrl": correct_item[language_audio_url]['S'],
@@ -60,16 +52,12 @@ def lambda_handler(event, context):
                     "incorrectImages": incorrect_items
                 }
             statusCode = '200'
-            
-        #build except block
         
         except Exception as e:
             body = {"Error": str(e)}
             statusCode = '400'
             print(f"An unexpected error occurred: {str(e)}")
-
-        
-        
+      
         return {
             'statusCode': statusCode,
             'headers': {
@@ -80,10 +68,3 @@ def lambda_handler(event, context):
         }
         
         
-    
-
-
-
-    
-
-
