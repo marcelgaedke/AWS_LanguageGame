@@ -46,7 +46,6 @@ Resources:
     Type: AWS::Serverless::HttpApi
     Properties:
       Name: language-game-api
-      Auth:
       CorsConfiguration:
         AllowOrigins:
           - "*"
