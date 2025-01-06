@@ -1,6 +1,6 @@
 # AWS Language Game
 
-This Game has been created for and submitted to the **AWS Game Builder Challenge** (https://awsdevchallenge.devpost.com/)
+This Game has been created for and submitted to the **AWS Game Builder Challenge** (https://devpost.com/software/aws-serverless-ai-powered-language-game)
 
 This repository contains the code and infrastructure for a Children Language Game, a cloud-native application designed to help young children who cannot yet read or write learn new languages in an interactive and engaging way. The game uses a combination of images and AI-generated audio content to enhance the learning experience. Built on AWS, it leverages services such as Lambda, DynamoDB, S3, and CloudFront to deliver a serverless, scalable, and highly available architecture.
 
@@ -146,7 +146,7 @@ S3BUCKETNAME="<bucketname>" ./scripts/deploy_frontend.sh
 
 ## Acknowledgments
 
-- Built with AWS SAM and other AWS services as part of the AWS Game Builders Challenge (https://awsdevchallenge.devpost.com/).
+- Built with AWS SAM and other AWS services as part of the AWS Game Builders Challenge (https://devpost.com/software/aws-serverless-ai-powered-language-game).
 - Inspired by serverless design patterns for scalable applications.
 
 ---
