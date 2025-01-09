@@ -1,6 +1,11 @@
 # DynamoDB Backup
 dynamodb-backup
 
+
+#assets
+frontend/assets/images/*
+frontend/assets/audio/*
+
 # Events
 events/
 
