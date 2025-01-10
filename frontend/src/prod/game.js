@@ -7,7 +7,7 @@ let score = 0;
 const urlParams = new URLSearchParams(window.location.search);
 const selectedLanguage = urlParams.get('language');
 const category = urlParams.get('category');
-const apiUrl = `language-game?language=${selectedLanguage}&category=${category}`;
+const apiUrl = `/language-game?language=${selectedLanguage}&category=${category}`;
 
 
 
@@ -35,10 +35,10 @@ if (selectedLanguage && flagImages[selectedLanguage]) {
 function displayFlag() {
     const urlParams = new URLSearchParams(window.location.search);
     const selectedLanguage = urlParams.get('language');
-    console.log('Selected Language:', selectedLanguage);
+    //console.log('Selected Language:', selectedLanguage);
     const imageFlagPlaceholder = document.getElementById("gameFlagImage");
     if (selectedLanguage && flagImages[selectedLanguage]) {
-        console.log('Flag Image URL:', flagImages[selectedLanguage]);
+        //console.log('Flag Image URL:', flagImages[selectedLanguage]);
         imageFlagPlaceholder.src = flagImages[selectedLanguage];
         imageFlagPlaceholder.alt = `${selectedLanguage} flag`;
     } else {
